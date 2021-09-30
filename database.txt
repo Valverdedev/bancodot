@@ -1,0 +1,2 @@
+dotnet ef database update InitDatabase --project bancodot.Infra.Data -s bancodot.Application -c MysqlContext --verbose 
+dotnet ef migrations add InitDatabase --project bancodot.Infra.Data -s bancodot.Application -c MysqlContext --verbose 
