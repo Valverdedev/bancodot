@@ -20,17 +20,19 @@ namespace bancodot.Service.Services
                 if (employer != null)
                 {
                     enrolment = Int32.Parse(employer.Enrollment);
+                    enrolment++;
                 }
+                
             }
             catch (Exception)
             {
 
-                throw;
+                enrolment = 1000;
             }
           
             
            
-            enrolment++;
+            
             return enrolment.ToString();
         }
 

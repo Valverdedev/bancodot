@@ -27,8 +27,12 @@ namespace bancodot.Infra.Data.Repository
 
         public async Task<Account> SelectAssync(string AccountNumber)
         {
-            return await _mySqlContext.Accounts.Where(prop => prop.AccountNumber == AccountNumber).Include(a => a.Client).FirstOrDefaultAsync();
-
+           
+            IQueryable<Account> query = _mySqlContext.Accounts
+                .Include(a => a.Client)
+                .Where(c => c.AccountNumber == AccountNumber);
+            return await query.AsNoTracking().FirstOrDefaultAsync();
+            
         }
     }
 }

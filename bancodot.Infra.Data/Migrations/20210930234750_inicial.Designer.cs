@@ -9,8 +9,8 @@ using bancodot.Infra.Data.Context;
 namespace bancodot.Infra.Data.Migrations
 {
     [DbContext(typeof(MysqlContext))]
-    [Migration("20210930132907_A")]
-    partial class A
+    [Migration("20210930234750_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,31 +23,30 @@ namespace bancodot.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int(11)");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("varchar(70)")
-                        .HasColumnName("City");
+                        .HasMaxLength(70)
+                        .HasColumnType("varchar(70)");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
-                        .HasColumnType("varchar(10)")
-                        .HasColumnName("PostalCode");
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
 
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("varchar(2)")
-                        .HasColumnName("Estate");
+                    b.Property<int>("State")
+                        .HasMaxLength(2)
+                        .HasColumnType("int");
 
                     b.Property<string>("StretAddress")
                         .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("StretAddress");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Address");
+                    b.ToTable("address");
                 });
 
             modelBuilder.Entity("bancodot.Domain.Entities.Account", b =>
@@ -58,39 +57,33 @@ namespace bancodot.Infra.Data.Migrations
 
                     b.Property<string>("AccountNumber")
                         .IsRequired()
-                        .HasColumnType("varchar(6)")
-                        .HasColumnName("AccountNumber");
+                        .HasMaxLength(6)
+                        .HasColumnType("varchar(6)");
 
-                    b.Property<string>("AccountStatus")
-                        .IsRequired()
-                        .HasColumnType("varchar(15)")
-                        .HasColumnName("AccountStatus");
+                    b.Property<int>("AccountStatus")
+                        .HasMaxLength(15)
+                        .HasColumnType("int");
 
-                    b.Property<string>("AccountType")
-                        .IsRequired()
-                        .HasColumnType("varchar(15)")
-                        .HasColumnName("Estate");
+                    b.Property<int>("AccountType")
+                        .HasColumnType("int");
 
                     b.Property<int>("AgencyId")
-                        .HasColumnType("int(5)");
+                        .HasColumnType("int(11)");
 
                     b.Property<float>("Balance")
-                        .HasColumnType("float")
-                        .HasColumnName("Balance");
+                        .HasColumnType("float(12,0)");
 
                     b.Property<int>("ClientId")
-                        .HasColumnType("int(5)");
+                        .HasColumnType("int(11)");
 
                     b.Property<int>("ManagerId")
-                        .HasColumnType("int(5)");
+                        .HasColumnType("int(11)");
 
                     b.Property<DateTime>("OpeningDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("OpeningDate");
+                        .HasColumnType("datetime");
 
                     b.Property<float>("SpecialLimit")
-                        .HasColumnType("float")
-                        .HasColumnName("SpecialLimite");
+                        .HasColumnType("float(12,0)");
 
                     b.HasKey("Id");
 
@@ -100,185 +93,149 @@ namespace bancodot.Infra.Data.Migrations
 
                     b.HasIndex(new[] { "ManagerId" }, "IX_Account_ManagerId");
 
-                    b.ToTable("Account");
+                    b.ToTable("account");
                 });
 
             modelBuilder.Entity("bancodot.Domain.Entities.Agency", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int(11)");
 
                     b.Property<int?>("AddressId")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("AddressId");
+                        .HasColumnType("int(11)");
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("varchar(5)")
-                        .HasColumnName("Code");
+                        .HasMaxLength(5)
+                        .HasColumnType("varchar(5)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Name");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
                     b.HasIndex(new[] { "AddressId" }, "fk_agency_endereco");
 
-                    b.ToTable("Agency");
+                    b.ToTable("agency");
                 });
 
             modelBuilder.Entity("bancodot.Domain.Entities.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int(11)");
 
                     b.Property<int>("AddressId")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("AddressId");
+                        .HasColumnType("int(11)");
 
                     b.Property<DateTime>("BirtDate")
-                        .HasColumnType("DateTime")
-                        .HasColumnName("BirthDate");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasColumnType("varchar(11)")
-                        .HasColumnName("Cpf");
+                        .HasMaxLength(11)
+                        .HasColumnType("varchar(11)");
 
-                    b.Property<string>("Genre")
-                        .IsRequired()
-                        .HasColumnType("varchar(11)")
-                        .HasColumnName("Genre");
+                    b.Property<int>("Genre")
+                        .HasMaxLength(11)
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Name");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
                     b.HasIndex(new[] { "AddressId" }, "fk_cliente_endereco");
 
-                    b.ToTable("Client");
+                    b.ToTable("client");
                 });
 
             modelBuilder.Entity("bancodot.Domain.Entities.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int(11)");
 
                     b.Property<int>("AddressId")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("AddressId");
+                        .HasColumnType("int(11)");
 
                     b.Property<DateTime>("AdmissionDate")
-                        .HasColumnType("DateTime")
-                        .HasColumnName("AdmissionDate");
+                        .HasColumnType("datetime");
 
                     b.Property<int?>("AgencyId")
-                        .HasColumnType("int");
+                        .HasColumnType("int(11)");
 
                     b.Property<DateTime>("BirtDate")
-                        .HasColumnType("DateTime")
-                        .HasColumnName("BirthDate");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasColumnType("varchar(11)")
-                        .HasColumnName("Cpf");
+                        .HasMaxLength(11)
+                        .HasColumnType("varchar(11)");
 
                     b.Property<DateTime?>("DismissalDate")
-                        .HasColumnType("DateTime")
+                        .HasColumnType("datetime")
                         .HasColumnName("dismissalDate");
 
                     b.Property<string>("Enrollment")
                         .IsRequired()
-                        .HasColumnType("varchar(7)")
-                        .HasColumnName("Enrollment");
+                        .HasMaxLength(7)
+                        .HasColumnType("varchar(7)");
 
-                    b.Property<string>("Genre")
-                        .IsRequired()
-                        .HasColumnType("varchar(11)")
-                        .HasColumnName("Genre");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Name");
-
-                    b.Property<string>("Occupation")
-                        .IsRequired()
-                        .HasColumnType("varchar(30)")
-                        .HasColumnName("Occupation");
-
-                    b.Property<float>("Salary")
-                        .HasColumnType("float")
-                        .HasColumnName("Salary");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("varchar(15)")
-                        .HasColumnName("Satus");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.HasIndex("AgencyId");
-
-                    b.ToTable("Employeers");
-                });
-
-            modelBuilder.Entity("bancodot.Domain.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Genre")
+                        .HasMaxLength(11)
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Email");
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Name");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Password");
+                    b.Property<int>("Occupation")
+                        .HasMaxLength(30)
+                        .HasColumnType("int");
+
+                    b.Property<float>("Salary")
+                        .HasColumnType("float(12,0)");
+
+                    b.Property<int>("Status")
+                        .HasMaxLength(15)
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.HasIndex(new[] { "AgencyId" }, "IX_Employers_AgencyId");
+
+                    b.HasIndex(new[] { "AddressId" }, "fk_employee_endereco");
+
+                    b.ToTable("employers");
                 });
 
             modelBuilder.Entity("bancodot.Domain.Entities.Account", b =>
                 {
                     b.HasOne("bancodot.Domain.Entities.Agency", "Agency")
-                        .WithMany()
+                        .WithMany("Accounts")
                         .HasForeignKey("AgencyId")
-                        .HasConstraintName("fk_Account_Agency")
+                        .HasConstraintName("fk_account_agency")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("bancodot.Domain.Entities.Client", "Client")
-                        .WithMany("Account")
+                        .WithMany("Accounts")
                         .HasForeignKey("ClientId")
+                        .HasConstraintName("fk_account_client")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("bancodot.Domain.Entities.Employee", "Manager")
-                        .WithMany()
+                        .WithMany("Accounts")
                         .HasForeignKey("ManagerId")
-                        .HasConstraintName("fk_Account_Manager")
+                        .HasConstraintName("fk_account_manager")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -292,7 +249,7 @@ namespace bancodot.Infra.Data.Migrations
             modelBuilder.Entity("bancodot.Domain.Entities.Agency", b =>
                 {
                     b.HasOne("bancodot.Domain.Address", "Address")
-                        .WithMany()
+                        .WithMany("Agencies")
                         .HasForeignKey("AddressId")
                         .HasConstraintName("fk_agency_endereco");
 
@@ -302,7 +259,7 @@ namespace bancodot.Infra.Data.Migrations
             modelBuilder.Entity("bancodot.Domain.Entities.Client", b =>
                 {
                     b.HasOne("bancodot.Domain.Address", "Address")
-                        .WithMany()
+                        .WithMany("Clients")
                         .HasForeignKey("AddressId")
                         .HasConstraintName("fk_cliente_endereco")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -314,29 +271,46 @@ namespace bancodot.Infra.Data.Migrations
             modelBuilder.Entity("bancodot.Domain.Entities.Employee", b =>
                 {
                     b.HasOne("bancodot.Domain.Address", "Address")
-                        .WithMany()
+                        .WithMany("Employeers")
                         .HasForeignKey("AddressId")
-                        .HasConstraintName("fk_employee_address")
+                        .HasConstraintName("fk_employee_endereco")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("bancodot.Domain.Entities.Agency", "Agency")
                         .WithMany("Employers")
-                        .HasForeignKey("AgencyId");
+                        .HasForeignKey("AgencyId")
+                        .HasConstraintName("fk_employee_agency");
 
                     b.Navigation("Address");
 
                     b.Navigation("Agency");
                 });
 
+            modelBuilder.Entity("bancodot.Domain.Address", b =>
+                {
+                    b.Navigation("Agencies");
+
+                    b.Navigation("Clients");
+
+                    b.Navigation("Employeers");
+                });
+
             modelBuilder.Entity("bancodot.Domain.Entities.Agency", b =>
                 {
+                    b.Navigation("Accounts");
+
                     b.Navigation("Employers");
                 });
 
             modelBuilder.Entity("bancodot.Domain.Entities.Client", b =>
                 {
-                    b.Navigation("Account");
+                    b.Navigation("Accounts");
+                });
+
+            modelBuilder.Entity("bancodot.Domain.Entities.Employee", b =>
+                {
+                    b.Navigation("Accounts");
                 });
 #pragma warning restore 612, 618
         }

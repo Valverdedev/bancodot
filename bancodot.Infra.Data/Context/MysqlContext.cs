@@ -15,7 +15,7 @@ namespace bancodot.Infra.Data.Context
         }
        
 
-        public DbSet<User> Users { get; set; }
+        
         public DbSet<Client> Client { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Agency> Agency { get; set; }
@@ -25,7 +25,7 @@ namespace bancodot.Infra.Data.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>(new UserMap().Configure);
+           
             modelBuilder.Entity<Agency>(new AgencyMap().Configure);
             modelBuilder.Entity<Address>(new AddressMap().Configure);
             modelBuilder.Entity<Client>(new ClientMap().Configure);

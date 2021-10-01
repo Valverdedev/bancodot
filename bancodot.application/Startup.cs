@@ -36,8 +36,7 @@ namespace bancodot.application
                 "server=localhost;port=3306;user=root;database=bancodot", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.20-mariadb")));
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-            services.AddScoped<IAgencyRepository, AgencyRepository>();
+           services.AddScoped<IAgencyRepository, AgencyRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
@@ -60,8 +59,10 @@ namespace bancodot.application
                   p.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                  
               })
-
-                .AddFluentValidation(p => p.RegisterValidatorsFromAssemblyContaining<UserValidator>())
+              .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+)
+                
                 .AddFluentValidation(p => p.RegisterValidatorsFromAssemblyContaining<ClientValidator>());
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

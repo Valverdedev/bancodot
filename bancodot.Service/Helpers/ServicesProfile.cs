@@ -16,14 +16,14 @@ namespace bancodot.Service.Helpers
             CreateMap<Client, ClientCreatDto>().ReverseMap();
 
             CreateMap<Client, ClientSelectDto>()
-            .ForMember(a => a.Accounts, opts => opts.MapFrom(a => a.Account.Select
+            .ForMember(a => a.Accounts, opts => opts.MapFrom(a => a.Accounts.Select
             (c => new { c.AccountNumber, c.AccountType, c.AccountStatus })));
             CreateMap<Employee, EmployeeCreatDto>().ReverseMap();
             CreateMap<Employee, EmployeeSelectDto>().ReverseMap();
                
             CreateMap<Account, AccountCreatDto>().ReverseMap();
-            CreateMap<Account, AccountSelectDto>();
-                       
+            CreateMap<Account, AccountSelectDto>().ReverseMap();
+                
             CreateMap<Address, AddressDto>().ReverseMap();
         }
     }

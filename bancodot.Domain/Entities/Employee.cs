@@ -12,7 +12,8 @@ namespace bancodot.Domain.Entities
         public OccupationEnum Occupation { get; set; }
         public float Salary { get; set; }
         public EmployeeStatusEnum Status { get; set; }
-        public virtual Agency? Agency { get; set; }
         public int? AgencyId { get; set; }
+        public virtual Agency Agency { get; set; }
+        public virtual ICollection<Account> Accounts { get; set; }
     }
 }

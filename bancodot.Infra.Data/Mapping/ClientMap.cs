@@ -8,45 +8,34 @@ namespace bancodot.Infra.Data.Mapping
 {
     class ClientMap : IEntityTypeConfiguration<Client>
     {
-        public void Configure(EntityTypeBuilder<Client> builder)
+        public void Configure(EntityTypeBuilder<Client> entity)
         {
-            builder.ToTable("Client");
-            builder.HasIndex(prop => prop.AddressId, "fk_cliente_endereco");
-            builder.HasKey(prop => prop.Id);
+            entity.ToTable("client");
 
-            builder.Property(prop => prop.Cpf)
-                   .HasConversion(prop => prop.ToString(), prop => prop)
-                   .IsRequired()
-                   .HasColumnName("Cpf")
-                   .HasColumnType("varchar(11)");
+            entity.HasIndex(e => e.AddressId, "fk_cliente_endereco");
 
-            builder.Property(prop => prop.BirtDate)
-                   .IsRequired()
-                   .HasColumnName("BirthDate")
-                   .HasColumnType("DateTime");
+            entity.Property(e => e.Id).HasColumnType("int(11)");
 
-            builder.Property(prop => prop.Genre)
-                   .IsRequired()
-                   .HasConversion(prop => prop.ToString(), prop => (GenreEnum)Enum.Parse(typeof(GenreEnum), prop))
-                   .HasColumnName("Genre")
-                   .HasColumnType("varchar(11)");
+            entity.Property(e => e.AddressId).HasColumnType("int(11)");
 
-            builder.Property(prop => prop.Name)
-                   .HasConversion(prop => prop.ToString(), prop => prop)
-                   .IsRequired()
-                   .HasColumnName("Name")
-                   .HasColumnType("varchar(100)");
+            entity.Property(e => e.BirtDate).HasColumnType("datetime");
 
-            builder.Property(prop => prop.AddressId)
-                     .HasColumnType("int(11)")
-                     .HasColumnName("AddressId");
+            entity.Property(e => e.Cpf)
+                .IsRequired()
+                .HasMaxLength(11);
 
-            builder.HasOne(prop=> prop.Address)
-                   .WithMany()
-                   .HasForeignKey(prop => prop.AddressId)
-                   .HasConstraintName("fk_cliente_endereco");
+            entity.Property(e => e.Genre)
+                .IsRequired()
+                .HasMaxLength(11);
 
-            
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.HasOne(d => d.Address)
+                .WithMany(p => p.Clients)
+                .HasForeignKey(d => d.AddressId)
+                .HasConstraintName("fk_cliente_endereco");
 
         }
     }

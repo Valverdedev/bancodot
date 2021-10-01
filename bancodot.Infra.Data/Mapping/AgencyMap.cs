@@ -7,34 +7,28 @@ namespace bancodot.Infra.Data.Mapping
 {
     class AgencyMap : IEntityTypeConfiguration<Agency>
     {
-        public void Configure(EntityTypeBuilder<Agency> builder)
+        public void Configure(EntityTypeBuilder<Agency> entity)
         {
-            builder.ToTable("Agency");
-            builder.HasIndex(prop => prop.AddressId, "fk_agency_endereco");
-            builder.HasKey(prop => prop.Id);
+            entity.ToTable("agency");
 
-            builder.Property(prop => prop.Name)
-                .HasConversion(prop => prop.ToString(), prop => prop)
+            entity.HasIndex(e => e.AddressId, "fk_agency_endereco");
+
+            entity.Property(e => e.Id).HasColumnType("int(11)");
+
+            entity.Property(e => e.AddressId).HasColumnType("int(11)");
+
+            entity.Property(e => e.Code)
                 .IsRequired()
-                .HasColumnName("Name")
-                .HasColumnType("varchar(100)");
+                .HasMaxLength(5);
 
-            builder.Property(prop => prop.Code)
-                .HasConversion(prop => prop.ToString(), prop => prop)
+            entity.Property(e => e.Name)
                 .IsRequired()
-                .HasColumnName("Code")
-                .HasColumnType("varchar(5)");
+                .HasMaxLength(100);
 
-            builder.Property(prop => prop.AddressId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("AddressId");
-
-            builder.HasOne(prop => prop.Address)
-              .WithMany()
-              .HasForeignKey(prop => prop.AddressId)
-              .HasConstraintName("fk_agency_endereco");
-
-            builder.HasMany(prop => prop.Employers);
+            entity.HasOne(d => d.Address)
+                .WithMany(p => p.Agencies)
+                .HasForeignKey(d => d.AddressId)
+                .HasConstraintName("fk_agency_endereco");
         }
     }
 }

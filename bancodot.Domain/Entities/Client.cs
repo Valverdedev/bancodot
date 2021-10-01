@@ -5,6 +5,6 @@ namespace bancodot.Domain.Entities
 {
     public class Client : PersonAbstract
     {
-       public virtual ICollection<Account>? Account { get; set; }
+       public virtual ICollection<Account> Accounts { get; set; }
     }
 }

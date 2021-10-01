@@ -9,81 +9,63 @@ namespace bancodot.Infra.Data.Mapping
 {
     class EmployeeMap : IEntityTypeConfiguration<Employee>
     {
-        public void Configure(EntityTypeBuilder<Employee> builder)
+        public void Configure(EntityTypeBuilder<Employee> entity)
         {
-            builder.ToTable("Employeers");
-           // builder.HasIndex(prop => prop.AddressId, "fk_employee_address");
-            builder.HasKey(prop => prop.Id);
+            entity.ToTable("employers");
 
-            builder.Property(prop => prop.Enrollment)
-                   .HasConversion(prop => prop.ToString(), prop => prop)
-                   .IsRequired()
-                   .HasColumnName("Enrollment")
-                   .HasColumnType("varchar(7)");
+            entity.HasIndex(e => e.AgencyId, "IX_Employers_AgencyId");
 
-            builder.Property(prop => prop.Cpf)
-                   .HasConversion(prop => prop.ToString(), prop => prop)
-                   .IsRequired()
-                   .HasColumnName("Cpf")
-                   .HasColumnType("varchar(11)");
+            entity.HasIndex(e => e.AddressId, "fk_employee_endereco");
 
-            builder.Property(prop => prop.BirtDate)
-                   .IsRequired()
-                   .HasColumnName("BirthDate")
-                   .HasColumnType("DateTime");
+            entity.Property(e => e.Id).HasColumnType("int(11)");
 
-            builder.Property(prop => prop.Genre)
-                   .IsRequired()
-                   .HasConversion(prop => prop.ToString(), prop => (GenreEnum)Enum.Parse(typeof(GenreEnum), prop))
-                   .HasColumnName("Genre")
-                   .HasColumnType("varchar(11)");
+            entity.Property(e => e.AddressId).HasColumnType("int(11)");
 
-            builder.Property(prop => prop.Name)
-                   .HasConversion(prop => prop.ToString(), prop => prop)
-                   .IsRequired()
-                   .HasColumnName("Name")
-                   .HasColumnType("varchar(100)");
+            entity.Property(e => e.AdmissionDate).HasColumnType("datetime");
 
-            builder.Property(prop => prop.AddressId)
-                     .HasColumnType("int(11)")
-                     .HasColumnName("AddressId");
+            entity.Property(e => e.AgencyId).HasColumnType("int(11)");
 
-            builder.HasOne(prop => prop.Address)
-                   .WithMany()
-                   .HasForeignKey(prop => prop.AddressId)
-                   .HasConstraintName("fk_employee_address");
+            entity.Property(e => e.BirtDate).HasColumnType("datetime");
 
-            builder.Property(prop => prop.AdmissionDate)
-                  .HasColumnType("DateTime")
-                  .IsRequired()
-                  .HasColumnName("AdmissionDate");
+            entity.Property(e => e.Cpf)
+                .IsRequired()
+                .HasMaxLength(11);
 
-            builder.Property(prop => prop.DismissalDate)
-                .HasColumnType("DateTime")
+            entity.Property(e => e.DismissalDate)
+                .HasColumnType("datetime")
                 .HasColumnName("dismissalDate");
 
-            builder.Property(prop => prop.Occupation)
-                  .IsRequired()
-                  .HasConversion(prop => prop.ToString(), prop => (OccupationEnum)Enum.Parse(typeof(OccupationEnum), prop))
-                  .HasColumnName("Occupation")
-                  .HasColumnType("varchar(30)");
+            entity.Property(e => e.Enrollment)
+                .IsRequired()
+                .HasMaxLength(7);
 
-            builder.Property(prop => prop.Status)
-                 .IsRequired()
-                 .HasConversion(prop => prop.ToString(), prop => (EmployeeStatusEnum)Enum.Parse(typeof(EmployeeStatusEnum), prop))
-                 .HasColumnName("Satus")
-                 .HasColumnType("varchar(15)");
+            entity.Property(e => e.Genre)
+                .IsRequired()
+                .HasMaxLength(11);
 
-            builder.Property(prop => prop.Salary)
-                 .IsRequired()
-                 .HasColumnName("Salary")
-                 .HasColumnType("float");
-/*
-            builder.HasOne(prop => prop.Agency)
-                   .WithMany()
-                   .HasForeignKey(prop => prop.AgencyId)
-                   .HasConstraintName("fk_employee_agency");
-                    */
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.Occupation)
+                .IsRequired()
+                .HasMaxLength(30);
+
+            entity.Property(e => e.Salary).HasColumnType("float(12,0)");
+
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasMaxLength(15);
+
+            entity.HasOne(d => d.Address)
+                .WithMany(p => p.Employeers)
+                .HasForeignKey(d => d.AddressId)
+                .HasConstraintName("fk_employee_endereco");
+
+            entity.HasOne(d => d.Agency)
+                .WithMany(p => p.Employers)
+                .HasForeignKey(d => d.AgencyId)
+                .HasConstraintName("fk_employee_agency");
         }
     }
 }

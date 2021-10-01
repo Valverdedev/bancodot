@@ -38,7 +38,12 @@ namespace bancodot.Infra.Data.Repository
       
         public async Task<Client> SelectByCpfAssync(string Cpf)
         {
-            return await _mySqlContext.Client.Where(c => c.Cpf == Cpf).Include(e => e.Account).Include(a => a.Address).FirstOrDefaultAsync();
+            IQueryable<Client> query = _mySqlContext.Client
+                .Include(a => a.Address)
+                .Include(a => a.Accounts)
+                .Where(c => c.Cpf == Cpf);
+            return await query.AsNoTracking().FirstOrDefaultAsync();
+
 
          }
         public Client SelectByIdAssync(int id)
