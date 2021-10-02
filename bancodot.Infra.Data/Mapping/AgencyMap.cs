@@ -24,11 +24,12 @@ namespace bancodot.Infra.Data.Mapping
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);
-
+            /*
             entity.HasOne(d => d.Address)
                 .WithMany(p => p.Agencies)
                 .HasForeignKey(d => d.AddressId)
                 .HasConstraintName("fk_agency_endereco");
+            */
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿using bancodot.Domain.Entities;
-using bancodot.Infra.Data.Repository.abstractions;
+﻿using bancodot.Infra.Data.Repository.abstractions;
+using bancodot.Service.DTOs;
 using FluentValidation;
 using System;
 
 
 namespace bancodot.Service.Validators
 {
-   public class ClientValidator : AbstractValidator<Client>
+    public class ClientValidator : AbstractValidator<ClientCreatDto>
     {
        public readonly IClientRepository _clientRepository;
         public ValidateCpf _validateCpf;
@@ -23,39 +23,31 @@ namespace bancodot.Service.Validators
 
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Favor Inserir um Nome.")
-                .NotNull().WithMessage("Nome.");
-
+                .NotNull().WithMessage("Favor Inserir um Nome.");
 
             RuleFor(c => c.BirtDate)
                .NotEmpty().WithMessage("Favor entrar com data válida.")
                .NotNull().WithMessage("Favor entrar com data válida.")
-               .Must(ClientAge).WithMessage("O Cliente deve ser maior de idades");
-            
+               .Must(ClientAge).WithMessage("O Cliente deve ser maior de idade");            
         }
 
         private  bool ClientAge(DateTime dataNascimento)
-        {
-           
+        {           
             return dataNascimento <= DateTime.Now.AddYears(-18);
         }
         private  bool ValidateCpf(string Cpf)
-        {
-          
+        {          
             return _validateCpf.Validate(Cpf);
         }
         
-        private  bool CpfExist(string Cpf)
-        {
-            
-          
+        private bool CpfExist(string Cpf)
+        {                     
           var res =  _clientRepository.SelectByCpfAssync(Cpf);
           if(res.Result == null)
             {
                 return true;
             }
-
-            return false;
-           
+                return false;           
         }
        
     }

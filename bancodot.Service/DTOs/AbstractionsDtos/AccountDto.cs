@@ -7,10 +7,8 @@ namespace bancodot.Service.DTOs.AbstractionsDtos
         public int AgencyId { get; set; }
         public int ManagerId { get; set; }
         public AccountTypeEnum AccountType { get; set; }
-        public AccountStatusEnum AccountStatus { get; set; }
         public int ClientId { get; set; }
         public double Balance { get; set; }
         public double SpecialLimit { get; set; }
-
     }
 }

@@ -56,12 +56,12 @@ namespace bancodot.Infra.Data.Mapping
             entity.Property(e => e.Status)
                 .IsRequired()
                 .HasMaxLength(15);
-
+            /*/
             entity.HasOne(d => d.Address)
                 .WithMany(p => p.Employeers)
                 .HasForeignKey(d => d.AddressId)
                 .HasConstraintName("fk_employee_endereco");
-
+            */
             entity.HasOne(d => d.Agency)
                 .WithMany(p => p.Employers)
                 .HasForeignKey(d => d.AgencyId)

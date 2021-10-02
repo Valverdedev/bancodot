@@ -8,7 +8,6 @@ namespace bancodot.Service.DTOs.AbstractionsDtos
               
         public DateTime AdmissionDate { get; set; }       
         public OccupationEnum Occupation { get; set; }
-        
         public EmployeeStatusEnum Status { get; set; }
        
     }

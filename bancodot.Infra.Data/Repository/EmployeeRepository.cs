@@ -27,7 +27,11 @@ namespace bancodot.Infra.Data.Repository
 
         public async Task<Employee> SelectAssync(string Enrrolment ) {
 
-            return await _mySqlContext.Employee.Where(a => a.Enrollment == Enrrolment).Include(c => c.Agency.Name).Include(c => c.Agency.Code).FirstOrDefaultAsync();             
+            IQueryable<Employee> query = _mySqlContext.Employee
+               .Include(a => a.Address)
+               .Include(a => a.Agency)
+               .Where(c => c.Enrollment == Enrrolment);
+            return await query.AsNoTracking().FirstOrDefaultAsync();
         }
 
         public Employee SelectLastAssync()

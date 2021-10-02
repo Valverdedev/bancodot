@@ -30,6 +30,7 @@ namespace bancodot.Infra.Data.Repository
            
             IQueryable<Account> query = _mySqlContext.Accounts
                 .Include(a => a.Client)
+                .Include(a => a.Agency)
                 .Where(c => c.AccountNumber == AccountNumber);
             return await query.AsNoTracking().FirstOrDefaultAsync();
             
