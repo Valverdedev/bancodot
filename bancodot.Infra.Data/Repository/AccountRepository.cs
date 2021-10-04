@@ -26,8 +26,7 @@ namespace bancodot.Infra.Data.Repository
         }
 
         public async Task<Account> SelectAssync(string AccountNumber)
-        {
-           
+        {           
             IQueryable<Account> query = _mySqlContext.Accounts
                 .Include(a => a.Client)
                 .Include(a => a.Agency)

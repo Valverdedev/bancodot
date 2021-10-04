@@ -11,7 +11,7 @@ namespace bancodot.Infra.Data.Repository.abstractions
         void Update(Client Entity);
 
         IList<Client> Select();
-        Client SelectByIdAssync(int id);
+        Client SelectById(int id);
         Task<Client> SelectByCpfAssync(string Cpf);
     }
 }

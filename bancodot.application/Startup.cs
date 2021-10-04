@@ -57,14 +57,16 @@ namespace bancodot.application
               {
                   p.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                   p.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                 
-              })
-              .AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-)
-                
-                .AddFluentValidation(p => p.RegisterValidatorsFromAssemblyContaining<ClientValidator>());
 
+              })
+                /*
+                .AddNewtonsoftJson(options =>
+      options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+
+  )
+          */
+                .AddFluentValidation(p => p.RegisterValidatorsFromAssemblyContaining<ClientValidator>())
+                .AddFluentValidation(p => p.RegisterValidatorsFromAssemblyContaining<AccountValidator>());
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 

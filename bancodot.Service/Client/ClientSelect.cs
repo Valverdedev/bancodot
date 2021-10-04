@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using bancodot.Domain.Entities;
-using bancodot.Domain.Interfaces;
-using bancodot.Infra.Data.Repository;
 using bancodot.Infra.Data.Repository.abstractions;
 using bancodot.Service.Abstractions;
 using bancodot.Service.DTOs;

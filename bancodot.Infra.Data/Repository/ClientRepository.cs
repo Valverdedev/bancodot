@@ -44,11 +44,13 @@ namespace bancodot.Infra.Data.Repository
                 .Where(c => c.Cpf == Cpf);
             return await query.AsNoTracking().FirstOrDefaultAsync();
 
-
          }
-        public Client SelectByIdAssync(int id)
+        public Client SelectById(int id)
         {
-            return _baseRepository.Select(id);
+            IQueryable<Client> query = _mySqlContext.Client
+                .Include(a => a.Accounts)
+                .Where(c => c.Id == id);
+            return  query.AsNoTracking().FirstOrDefault();
 
         }
 

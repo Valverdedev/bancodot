@@ -31,9 +31,8 @@ namespace bancodot.Service
             
         public async Task InsertAssync(AccountCreatDto Entity)
         {
-           var client =  _clientRepository.SelectByIdAssync(Entity.ClientId);
+           var client =  _clientRepository.SelectById(Entity.ClientId);
            var agency = _agencyRepository.SelectById(Entity.AgencyId);         
-
             var account = _mapper.Map<Account>(Entity);
             account.AccountNumber = _generateNumberAccount.NumberCreat(agency.Code, client.Cpf, account.AccountType);
         await  _accountRepository.InsertAssync(account);
