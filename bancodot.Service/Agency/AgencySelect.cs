@@ -19,7 +19,7 @@ namespace bancodot.Service
         }
         public async Task<AgencySelectDto> SelectAssync(string CodeAgencia)
         {
-           var agency = await _agencyRepository.SelectAssync(CodeAgencia);
+           var agency = await _agencyRepository.SelectByCodeAssync(CodeAgencia);
            
             return _mapper.Map<AgencySelectDto>(agency);
         }

@@ -23,12 +23,12 @@ namespace bancodot.Infra.Data.Repository
           await  _baseRepository.InsertAssync(entity);
         }
 
-        public async Task<Agency> SelectAssync(string Code)
+        public async Task<Agency> SelectByCodeAssync(string Code)
         {
            
             return await _mySqlContext.Agency.Where(a => a.Code == Code).Include(a => a.Address).FirstOrDefaultAsync();
         }
-
+       
         public Agency SelectById(int id)
         {
             return _baseRepository.Select(id);

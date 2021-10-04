@@ -6,7 +6,8 @@ namespace bancodot.Infra.Data.Repository.abstractions
   public  interface IEmployeeRepository
     {
       Task InsertAssync(Employee Entity);
-      Task<Employee> SelectAssync(string Code);
+      Task<Employee> SelectByEnrolmentAssync(string Code);
+      Task<Employee> SelectByCpfAssync(string Cpf);
       Employee SelectLastAssync();
     }
 }

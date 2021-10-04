@@ -25,12 +25,19 @@ namespace bancodot.Infra.Data.Repository
             await _baseRepository.InsertAssync(Entity);
         }
 
-        public async Task<Employee> SelectAssync(string Enrrolment ) {
+        public async Task<Employee> SelectByEnrolmentAssync(string Enrrolment ) {
 
             IQueryable<Employee> query = _mySqlContext.Employee
                .Include(a => a.Address)
                .Include(a => a.Agency)
                .Where(c => c.Enrollment == Enrrolment);
+            return await query.AsNoTracking().FirstOrDefaultAsync();
+        }
+        public async Task<Employee> SelectByCpfAssync(string Cpf)
+        {
+
+            IQueryable<Employee> query = _mySqlContext.Employee
+            .Where(c => c.Cpf == Cpf);
             return await query.AsNoTracking().FirstOrDefaultAsync();
         }
 

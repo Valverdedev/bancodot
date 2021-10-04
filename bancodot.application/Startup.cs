@@ -15,6 +15,7 @@ using bancodot.Service;
 using bancodot.Service.Abstractions;
 using System;
 using bancodot.Service.Services;
+using Microsoft.OpenApi.Models;
 
 namespace bancodot.application
 {
@@ -53,11 +54,16 @@ namespace bancodot.application
             services.AddSwaggerGen();
 
             services.AddControllers()
+
               .AddJsonOptions(p =>
               {
                   p.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                   p.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 
+              });
+              services.AddSwaggerGen(c =>
+              {
+                  c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bancodot", Version = "v1" });
               })
                 /*
                 .AddNewtonsoftJson(options =>
@@ -66,7 +72,9 @@ namespace bancodot.application
   )
           */
                 .AddFluentValidation(p => p.RegisterValidatorsFromAssemblyContaining<ClientValidator>())
-                .AddFluentValidation(p => p.RegisterValidatorsFromAssemblyContaining<AccountValidator>());
+                .AddFluentValidation(p => p.RegisterValidatorsFromAssemblyContaining<AccountValidator>())
+                .AddFluentValidation(p => p.RegisterValidatorsFromAssemblyContaining<AgencyValidator>())
+                .AddFluentValidation(p => p.RegisterValidatorsFromAssemblyContaining<EmployeeValidator>());
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 

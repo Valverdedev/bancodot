@@ -19,7 +19,7 @@ namespace bancodot.Service
   
       public async  Task<EmployeeSelectDto>SelectAssync(string Enrollment)
         {
-            var employee = await _employeeRepository.SelectAssync(Enrollment);
+            var employee = await _employeeRepository.SelectByEnrolmentAssync(Enrollment);
           
             return _mapper.Map<EmployeeSelectDto>(employee);
         }

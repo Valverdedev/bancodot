@@ -11,7 +11,8 @@ namespace bancodot.Infra.Data.Repository.abstractions
    public interface IAgencyRepository
     {
         Task InsertAssync(Agency entity);
-        Task<Agency> SelectAssync(string Code);
+        Task<Agency> SelectByCodeAssync(string Code);
+       
         Agency SelectById(int id);
     }
 }
